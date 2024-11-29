@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AdventOfCode2024": {
+      "commandName": "Project",
+      "commandLineArgs": "53616c7465645f5fef9998bc789a2f3d24b81bc8bc8968dcd7063a6b100d69a8289a0bbdb22f9e79cc7c81719e44bc1d562725e9a308694cf19601c0cc29e70b"
+    }
+  }
+}
