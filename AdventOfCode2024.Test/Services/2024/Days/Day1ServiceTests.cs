@@ -9,14 +9,12 @@ using Moq;
 
 namespace AdventOfCode2024.Services._2024.Days.Tests
 {
-    public class Day1ServiceTests
+    public class Day1ServiceTests : DayServiceTestsBase
     {
-        private readonly Mock<IInputService> inputServiceMock;
         private readonly Day1Service service;
 
         public Day1ServiceTests()
         {
-            inputServiceMock = new Mock<IInputService>();
             service = new Day1Service(inputServiceMock.Object);
         }
 
