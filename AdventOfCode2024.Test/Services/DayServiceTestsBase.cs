@@ -1,6 +1,7 @@
-﻿using Moq;
+﻿using AdventOfCode2024.Services;
+using Moq;
 
-namespace AdventOfCode2024.Services._2024.Days.Tests
+namespace AdventOfCode2024.Test.Services
 {
     public class DayServiceTestsBase
     {

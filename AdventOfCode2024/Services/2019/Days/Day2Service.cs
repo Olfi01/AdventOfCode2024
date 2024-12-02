@@ -9,12 +9,12 @@ namespace AdventOfCode2024.Services._2019.Days
 {
     public class Day2Service(IInputService inputService) : SingleDayService(inputService, 2019, 2)
     {
-        private IntcodeComputerService computer = new IntcodeComputerService();
+        private readonly IntcodeComputerService computer = new();
 
         public async Task<int> Part1()
         {
             var program = (await InputService.GetInputAsIntList(year, day, ',')).Replace(1, 12).Replace(2, 2);
-            return computer.ExecuteProgram(program);
+            return await computer.ExecuteProgram(program);
         }
 
         public async Task<int> Part2()
@@ -25,7 +25,7 @@ namespace AdventOfCode2024.Services._2019.Days
                 for (int verb = 0; verb < 100; verb++)
                 {
                     var program = originalProgram.Replace(1, noun).Replace(2, verb);
-                    if (computer.ExecuteProgram(program) == 19690720) return 100 * noun + verb;
+                    if (await computer.ExecuteProgram(program) == 19690720) return 100 * noun + verb;
                 }
             }
             throw new Exception();
