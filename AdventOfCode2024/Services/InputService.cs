@@ -7,21 +7,31 @@ using System.Threading.Tasks;
 
 namespace AdventOfCode2024.Services
 {
-    internal class InputService
+    public class InputService : IInputService
     {
         private readonly HttpClient httpClient;
         public InputService(string authToken)
         {
             CookieContainer container = new();
-            container.Add(new Cookie("session", authToken));
+            container.Add(new Uri("http://adventofcode.com"), new Cookie("session", authToken));
             HttpClientHandler handler = new() { CookieContainer = container };
             this.httpClient = new HttpClient(handler);
         }
 
-        public string getInputAsString(int year, int day)
+        public async Task<string> GetInputAsString(int year, int day)
         {
             string url = $"https://adventofcode.com/{year}/day/{day}/input";
-            return httpClient.GetAsync(url).Result;
+            return await httpClient.GetStringAsync(url);
+        }
+
+        public async Task<IEnumerable<string>> GetInputAsList(int year, int day, char separator = '\n')
+        {
+            return (await GetInputAsString(year, day)).Split(separator).Where(s => !string.IsNullOrEmpty(s));
+        }
+
+        public async Task<IEnumerable<int>> GetInputAsIntList(int year, int day, char separator = '\n')
+        {
+            return (await GetInputAsList(year, day, separator)).Select(int.Parse).ToArray();
         }
     }
 }
