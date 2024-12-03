@@ -21,7 +21,7 @@ namespace AdventOfCode2024.Services._2019.Tests
         [InlineData("1002,4,3,4,33", 4, 99)]
         public async Task ExecuteProgramTest(string program, int readAt, int result)
         {
-            Assert.Equal(result, await service.ExecuteProgram(program.Split(',').Select(int.Parse), readAt));
+            Assert.Equal(result, await service.ExecuteProgram(program.Split(',').Select(long.Parse), readAt));
         }
 
         [Theory]
@@ -43,8 +43,35 @@ namespace AdventOfCode2024.Services._2019.Tests
         public async Task ExecuteProgramWithInputTest(int input, string program, int expectedOutput)
         {
             await service.InputStream.Writer.WriteAsync(input);
-            await service.ExecuteProgram(program.Split(',').Select(int.Parse));
+            await service.ExecuteProgram(program.Split(',').Select(long.Parse));
             Assert.Equal(expectedOutput, await service.OutputStream.Reader.ReadAsync());
+        }
+
+        [Theory]
+        [InlineData("104,1125899906842624,99", 1125899906842624)]
+        public async Task ExecuteProgramWithOutputTest(string program, long expectedOutput)
+        {
+            await service.ExecuteProgram(program.Split(',').Select(long.Parse));
+            Assert.Equal(expectedOutput, await service.OutputStream.Reader.ReadAsync());
+        }
+
+        [Fact]
+        public async Task ShouldRunQuine()
+        {
+            var program = "109,1,204,-1,1001,100,1,100,1008,100,16,101,1006,101,0,99".Split(',').Select(long.Parse);
+            await service.ExecuteProgram(program);
+            foreach (var l in program)
+            {
+                Assert.Equal(l, await service.OutputStream.Reader.ReadAsync());
+            }
+        }
+
+        [Fact]
+        public async Task ShouldOutput16DigitNumber()
+        {
+            var program = "1102,34915192,34915192,7,4,7,99,0".Split(',').Select(long.Parse);
+            await service.ExecuteProgram(program);
+            Assert.Equal(16, (await service.OutputStream.Reader.ReadAsync()).ToString().Length);
         }
     }
 }

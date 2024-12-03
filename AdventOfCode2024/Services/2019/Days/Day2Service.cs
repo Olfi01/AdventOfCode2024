@@ -11,15 +11,15 @@ namespace AdventOfCode2024.Services._2019.Days
     {
         private readonly IntcodeComputerService computer = new();
 
-        public async Task<int> Part1()
+        public async Task<long> Part1()
         {
-            var program = (await InputService.GetInputAsIntList(year, day, ',')).Replace(1, 12).Replace(2, 2);
+            var program = (await InputService.GetInputAsLongList(year, day, ',')).Replace(1, 12).Replace(2, 2);
             return await computer.ExecuteProgram(program);
         }
 
-        public async Task<int> Part2()
+        public async Task<long> Part2()
         {
-            var originalProgram = await InputService.GetInputAsIntList(year, day, ',');
+            var originalProgram = await InputService.GetInputAsLongList(year, day, ',');
             for (int noun = 0; noun < 100; noun++)
             {
                 for (int verb = 0; verb < 100; verb++)

@@ -8,15 +8,15 @@ namespace AdventOfCode2024.Services._2019.Days
 {
     public class Day7Service(IInputService inputService) : SingleDayService(inputService, 2019, 7)
     {
-        public async Task<int> Part1()
+        public async Task<long> Part1()
         {
-            var program = await InputService.GetInputAsIntList(year, day, ',');
+            var program = await InputService.GetInputAsLongList(year, day, ',');
             IntcodeComputerService computer = new();
-            int highestOut = 0;
+            long highestOut = 0;
             IEnumerable<IEnumerable<int>> permutations = ComputePermutations(Enumerable.Range(0, 5));
             foreach (var perm in permutations)
             {
-                int input = 0;
+                long input = 0;
                 foreach (var phase in perm)
                 {
                     await computer.InputStream.Writer.WriteAsync(phase);
@@ -45,14 +45,14 @@ namespace AdventOfCode2024.Services._2019.Days
             }
         }
 
-        public async Task<int> Part2()
+        public async Task<long> Part2()
         {
-            var program = await InputService.GetInputAsIntList(year, day, ',');
-            int highestOut = 0;
+            var program = await InputService.GetInputAsLongList(year, day, ',');
+            long highestOut = 0;
             IEnumerable<IEnumerable<int>> permutations = ComputePermutations(Enumerable.Range(5, 5));
             foreach (var perm in permutations)
             {
-                int input = 0;
+                long input = 0;
                 IntcodeComputerService[] amps = Enumerable.Range(0, perm.Count()).Select(x => new IntcodeComputerService()).ToArray();
                 Task[] tasks = new Task[amps.Length];
                 for (int i = 0; i < amps.Length; i++)

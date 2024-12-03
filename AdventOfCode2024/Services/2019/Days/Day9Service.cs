@@ -6,31 +6,25 @@ using System.Threading.Tasks;
 
 namespace AdventOfCode2024.Services._2019.Days
 {
-    public class Day5Service(IInputService inputService) : SingleDayService(inputService, 2019, 5)
+    public class Day9Service(IInputService inputService) : SingleDayService(inputService, 2019, 9)
     {
-        private readonly IntcodeComputerService computer = new();
+        private IntcodeComputerService computer = new();
 
         public async Task<long> Part1()
         {
             var program = await InputService.GetInputAsLongList(year, day, ',');
             await computer.InputStream.Writer.WriteAsync(1);
             await computer.ExecuteProgram(program);
-            while (computer.OutputStream.Reader.TryRead(out var output))
-            {
-                if (output != 0)
-                {
-                    if (computer.OutputStream.Reader.Count > 0) throw new Exception();
-                    else return output;
-                }
-            }
-            throw new Exception();
+            if (computer.OutputStream.Reader.Count > 1) throw new Exception();
+            return await computer.OutputStream.Reader.ReadAsync();
         }
 
         public async Task<long> Part2()
         {
             var program = await InputService.GetInputAsLongList(year, day, ',');
-            await computer.InputStream.Writer.WriteAsync(5);
+            await computer.InputStream.Writer.WriteAsync(2);
             await computer.ExecuteProgram(program);
+            if (computer.OutputStream.Reader.Count > 1) throw new Exception();
             return await computer.OutputStream.Reader.ReadAsync();
         }
     }

@@ -33,5 +33,10 @@ namespace AdventOfCode2024.Services
         {
             return (await GetInputAsList(year, day, separator)).Select(int.Parse).ToArray();
         }
+
+        public async Task<IEnumerable<long>> GetInputAsLongList(int year, int day, char separator = '\n')
+        {
+            return (await GetInputAsList(year, day, separator)).Select(long.Parse).ToArray();
+        }
     }
 }
