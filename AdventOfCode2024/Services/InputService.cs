@@ -29,6 +29,11 @@ namespace AdventOfCode2024.Services
             return (await GetInputAsString(year, day)).Split(separator).Where(s => !string.IsNullOrEmpty(s));
         }
 
+        public async Task<IEnumerable<string>> GetInputAsList(int year, int day, string separator)
+        {
+            return (await GetInputAsString(year, day)).Split(separator).Where(s => !string.IsNullOrEmpty(s));
+        }
+
         public async Task<IEnumerable<int>> GetInputAsIntList(int year, int day, char separator = '\n')
         {
             return (await GetInputAsList(year, day, separator)).Select(int.Parse).ToArray();
