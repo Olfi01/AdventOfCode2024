@@ -11,7 +11,7 @@ namespace AdventOfCode2024
         {
             inputService = new InputService(args[0]);
 
-            Day5Service day = new(inputService);
+            Day6Service day = new(inputService);
             var result = await day.Part2();
             Console.WriteLine(result);
         }
