@@ -12,8 +12,11 @@ namespace AdventOfCode2024
             inputService = new InputService(args[0]);
 
             Day9Service day = new(inputService);
+            DateTime before = DateTime.Now;
             var result = await day.Part2();
+            DateTime after = DateTime.Now;
             Console.WriteLine(result);
+            Console.WriteLine($"Finished in {after - before}");
         }
     }
 }
