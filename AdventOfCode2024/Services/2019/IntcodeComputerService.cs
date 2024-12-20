@@ -136,9 +136,10 @@ namespace AdventOfCode2024.Services._2019
         public async Task<long> ExecuteProgram(IEnumerable<long> program, long readAt = 0)
         {
             memory.Clear();
-            for (int i = 0; i < program.Count(); i++)
+            var enumerator = program.GetEnumerator();
+            for (int i = 0; enumerator.MoveNext(); i++)
             {
-                memory[i] = program.ElementAt(i);
+                memory[i] = enumerator.Current;
             }
             for (long i = 0; i < memory.Count; i++)
             {
