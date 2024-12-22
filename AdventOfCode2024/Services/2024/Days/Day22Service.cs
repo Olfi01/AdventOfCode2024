@@ -50,7 +50,7 @@ namespace AdventOfCode2024.Services._2024.Days
                 {
                     newNum = NextSecretNumber(num);
                     var c4 = LastDigitOf(newNum) - LastDigitOf(num);
-                    if (!prices.ContainsKey((c1, c2, c3, c4))) prices.Add((c1, c2, c3, c4), LastDigitOf(newNum));
+                    prices.TryAdd((c1, c2, c3, c4), LastDigitOf(newNum));
                     keys.Add((c1, c2, c3, c4));
                     c1 = c2;
                     c2 = c3;
@@ -62,13 +62,9 @@ namespace AdventOfCode2024.Services._2024.Days
 
             long bestSum = 0;
 
-            foreach (var (c1, c2, c3, c4) in keys)
+            foreach (var key in keys)
             {
-                long sum = 0;
-                foreach (var buyer in buyers)
-                {
-                    if (buyer.TryGetValue((c1, c2, c3, c4), out byte value)) sum += value;
-                }
+                long sum = buyers.Sum(b => (long)b.GetValueOrDefault(key, (byte)0));
                 if (sum > bestSum) bestSum = sum;
             }
 
